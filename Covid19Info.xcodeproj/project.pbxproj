@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		891EFDF32739407600D9B971 /* CountryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891EFDF22739407600D9B971 /* CountryInfo.swift */; };
+		891EFDF72739856C00D9B971 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891EFDF62739856C00D9B971 /* Color.swift */; };
 		898CCFA3273691C7008DDE7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898CCFA2273691C7008DDE7A /* AppDelegate.swift */; };
 		898CCFA5273691C7008DDE7A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898CCFA4273691C7008DDE7A /* SceneDelegate.swift */; };
-		898CCFA7273691C7008DDE7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898CCFA6273691C7008DDE7A /* ViewController.swift */; };
+		898CCFA7273691C7008DDE7A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898CCFA6273691C7008DDE7A /* DashboardViewController.swift */; };
 		898CCFAA273691C7008DDE7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 898CCFA8273691C7008DDE7A /* Main.storyboard */; };
 		898CCFAC273691CA008DDE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 898CCFAB273691CA008DDE7A /* Assets.xcassets */; };
 		898CCFAF273691CB008DDE7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 898CCFAD273691CB008DDE7A /* LaunchScreen.storyboard */; };
@@ -26,10 +27,11 @@
 
 /* Begin PBXFileReference section */
 		891EFDF22739407600D9B971 /* CountryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInfo.swift; sourceTree = "<group>"; };
+		891EFDF62739856C00D9B971 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		898CCF9F273691C7008DDE7A /* Covid19Info.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Covid19Info.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		898CCFA2273691C7008DDE7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		898CCFA4273691C7008DDE7A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		898CCFA6273691C7008DDE7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		898CCFA6273691C7008DDE7A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		898CCFA9273691C7008DDE7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		898CCFAB273691CA008DDE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		898CCFAE273691CB008DDE7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		891EFDF4273981E600D9B971 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				898CCFA6273691C7008DDE7A /* DashboardViewController.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		891EFDF52739855500D9B971 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				891EFDF62739856C00D9B971 /* Color.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		898CCF96273691C7008DDE7A = {
 			isa = PBXGroup;
 			children = (
@@ -74,11 +92,12 @@
 		898CCFA1273691C7008DDE7A /* Covid19Info */ = {
 			isa = PBXGroup;
 			children = (
+				891EFDF52739855500D9B971 /* Helper */,
+				891EFDF4273981E600D9B971 /* Screens */,
 				89DF040327380F00003FB469 /* Model */,
 				898CCFB627369580008DDE7A /* Networking */,
 				898CCFA2273691C7008DDE7A /* AppDelegate.swift */,
 				898CCFA4273691C7008DDE7A /* SceneDelegate.swift */,
-				898CCFA6273691C7008DDE7A /* ViewController.swift */,
 				898CCFA8273691C7008DDE7A /* Main.storyboard */,
 				898CCFAB273691CA008DDE7A /* Assets.xcassets */,
 				898CCFAD273691CB008DDE7A /* LaunchScreen.storyboard */,
@@ -191,8 +210,9 @@
 			files = (
 				89DF03FF27380AD7003FB469 /* NetworkManager.swift in Sources */,
 				89DF040127380CD2003FB469 /* NetworkError.swift in Sources */,
-				898CCFA7273691C7008DDE7A /* ViewController.swift in Sources */,
+				898CCFA7273691C7008DDE7A /* DashboardViewController.swift in Sources */,
 				898CCFA3273691C7008DDE7A /* AppDelegate.swift in Sources */,
+				891EFDF72739856C00D9B971 /* Color.swift in Sources */,
 				89E9DE782737ECE60054F855 /* Endpoint.swift in Sources */,
 				89DF0407273839F8003FB469 /* CountryWiseInfo.swift in Sources */,
 				898CCFA5273691C7008DDE7A /* SceneDelegate.swift in Sources */,
