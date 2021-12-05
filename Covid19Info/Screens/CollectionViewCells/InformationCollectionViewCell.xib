@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InformationCollectionViewCell" id="gTV-IL-0wX" customClass="InformationCollectionViewCell" customModule="Covid19Info" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="277" height="342"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="277" height="342"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WBH-i1-lVJ">
+                        <rect key="frame" x="0.0" y="0.0" width="277" height="342"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjC-Hx-N6v">
+                                <rect key="frame" x="8" y="8" width="261" height="326"/>
+                                <color key="backgroundColor" name="mainChartBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="mainBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qjC-Hx-N6v" secondAttribute="trailing" constant="8" id="C1Q-sT-Ub9"/>
+                            <constraint firstAttribute="bottom" secondItem="qjC-Hx-N6v" secondAttribute="bottom" constant="8" id="m1T-oV-TZP"/>
+                            <constraint firstItem="qjC-Hx-N6v" firstAttribute="leading" secondItem="WBH-i1-lVJ" secondAttribute="leading" constant="8" id="r6e-Ft-jD2"/>
+                            <constraint firstItem="qjC-Hx-N6v" firstAttribute="top" secondItem="WBH-i1-lVJ" secondAttribute="top" constant="8" id="rbb-tS-zBc"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WBH-i1-lVJ" secondAttribute="trailing" id="FK8-gJ-olb"/>
+                <constraint firstItem="WBH-i1-lVJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IKw-vF-ffh"/>
+                <constraint firstItem="WBH-i1-lVJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="REf-iu-vPS"/>
+                <constraint firstAttribute="bottom" secondItem="WBH-i1-lVJ" secondAttribute="bottom" id="fkJ-7b-Kjv"/>
+            </constraints>
+            <size key="customSize" width="277" height="342"/>
+            <connections>
+                <outlet property="chartContainerView" destination="qjC-Hx-N6v" id="fv2-3t-JRK"/>
+                <outlet property="mainContainerView" destination="WBH-i1-lVJ" id="sWY-wt-u7s"/>
+            </connections>
+            <point key="canvasLocation" x="68.840579710144937" y="84.375"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="mainBackgroundColor">
+            <color red="0.093999996781349182" green="0.0040000001899898052" blue="0.23499999940395355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mainChartBackgroundColor">
+            <color red="0.39599999785423279" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

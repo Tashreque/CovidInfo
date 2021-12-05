@@ -10,4 +10,5 @@ import UIKit
 
 struct Color {
     static let mainBackgroundColor = UIColor(named: "mainBackgroundColor")!
+    static let mainChartBackgroundColor = UIColor(named: "mainChartBackgroundColor")!
 }
