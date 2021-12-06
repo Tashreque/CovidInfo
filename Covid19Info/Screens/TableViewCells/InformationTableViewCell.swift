@@ -16,8 +16,11 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var infoCollectionView: UICollectionView!
 
     // Helper variables.
-    private var chartTypes = [ChartType]()
     private var chartDataSets = [ChartDataSet?]()
+    private var chartLabels = [[String]?]()
+    private var mainDisplayParameterKeys = [String]()
+    private var mainDisplayParameterValues = [String]()
+    private var chartTypes = [ChartType]()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,9 +48,13 @@ class InformationTableViewCell: UITableViewCell {
         infoCollectionView.register(UINib(nibName: InformationCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: InformationCollectionViewCell.identifier)
     }
 
-    func configureCell(numberOfInformationTypes: Int, dataSets: [ChartDataSet?], chartTypes: [ChartType]) {
+    func configureCell(dataSets: [ChartDataSet?], labels: [[String]?], mainDisplayParameterKeys: [String], mainDisplayParameterValues: [String], chartTypes: [ChartType]) {
         self.chartDataSets = dataSets
+        self.chartLabels = labels
+        self.mainDisplayParameterKeys = mainDisplayParameterKeys
+        self.mainDisplayParameterValues = mainDisplayParameterValues
         self.chartTypes = chartTypes
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.infoCollectionView.reloadData()
@@ -63,7 +70,7 @@ extension InformationTableViewCell: UICollectionViewDelegate, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InformationCollectionViewCell.identifier, for: indexPath) as! InformationCollectionViewCell
-        cell.configureCell(dataSet: chartDataSets[indexPath.row], chartType: chartTypes[indexPath.row])
+        cell.configureCell(dataSet: chartDataSets[indexPath.row], labels: chartLabels[indexPath.row], mainParameterKeyToDisplay: mainDisplayParameterKeys[indexPath.row], mainParameterValueToDisplay: mainDisplayParameterValues[indexPath.row], chartType: chartTypes[indexPath.row])
         return cell
     }
 

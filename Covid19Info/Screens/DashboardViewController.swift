@@ -41,8 +41,8 @@ class DashboardViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = Color.mainBackgroundColor
         globalCasesTitleLabel.text = "Global cases"
-        globalCasesTitleLabel.textColor = Color.mainChartBackgroundColor
-        globalCasesValueLabel.textColor = Color.mainChartBackgroundColor
+        globalCasesTitleLabel.textColor = Color.purpleTextColor
+        globalCasesValueLabel.textColor = Color.purpleTextColor
 
         navigationBarContainerView.backgroundColor = Color.mainBackgroundColor
         navigationBarView.backgroundColor = Color.mainBackgroundColor
@@ -76,7 +76,21 @@ extension DashboardViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
-        cell.configureCell(numberOfInformationTypes: viewModel.summaryDataSets.count, dataSets: viewModel.summaryDataSets, chartTypes: viewModel.summaryChartTypes)
+        let casesData = viewModel.getCasesDataSet(chartType: .barChart)
+        let deathsData = viewModel.getDeathsDataSet(chartType: .pieChart)
+        let recoveryData = viewModel.getRecoveryDataSet(chartType: .horizontalBarChart)
+        let testsData = viewModel.getTestsDataSset(chartType: .barChart)
+        let casesDataSet = casesData.0
+        let deathsDataSet = deathsData.0
+        let recoveryDataSet = recoveryData.0
+        let testsDataSet = testsData.0
+
+        let dataSets: [ChartDataSet?] = [casesDataSet, deathsDataSet, recoveryDataSet, testsDataSet]
+        let labels = [casesData.1, deathsData.1, recoveryData.1, testsData.1]
+        let mainDisplayParameterKeys = ["cases", "deaths", "recoveries", "tests"]
+        let mainDisplayParameterValues = [String(viewModel.globalSummary?.cases ?? 0), String(viewModel.globalSummary?.deaths ?? 0), String(viewModel.globalSummary?.recovered ?? 0), String(viewModel.globalSummary?.tests ?? 0)]
+        
+        cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, mainDisplayParameterValues: mainDisplayParameterValues, chartTypes: viewModel.defaultDisplayChartTypes)
         return cell
     }
 

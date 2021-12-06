@@ -8,8 +8,7 @@
 import Foundation
 import Charts
 
-typealias CaseParametersForPieChart = (casesToday: Double, activeCases: Double, criticalCases: Double, activeCasesPerMillion: Double, criticalCasesPerMillion: Double)
-typealias CaseParametersForBarChart = (cases: Double, casesToday: Double, casesPerMillion: Double, criticalCases: Double, criticalCasesPerMillion: Double, activeCases: Double, activeCasesPerMillion: Double)
+typealias CovidInformation = (ChartDataSet?, labels: [String]?)
 
 class DashboardViewModel {
     /// The covid 19 global data.
@@ -18,9 +17,8 @@ class DashboardViewModel {
     /// All country based data.
     var dataForAllCountries = [CountryWiseInfo]()
 
-    /// The summary data sets to display (bar).
-    var summaryDataSets = [ChartDataSet?]()
-    var summaryChartTypes = [ChartType]()
+    /// The default chart types to display.
+    var defaultDisplayChartTypes: [ChartType] = [.barChart, .pieChart, .horizontalBarChart, .barChart]
 
     /// The closure which is called in order to bind the view model with the view controller.
     var shouldBindNecessaryData: (() -> ())?
@@ -48,7 +46,6 @@ class DashboardViewModel {
                     }
                     if let allCountryWiseInfo = allCountryWiseInfo {
                         self.dataForAllCountries = allCountryWiseInfo
-                        self.getDataSetsToDisplay()
                         self.shouldBindNecessaryData?()
                     }
                 }
@@ -56,31 +53,108 @@ class DashboardViewModel {
         }
     }
 
-    func getDataSetsToDisplay() {
-        let barDataSet = getBarDataSet()
-        let pieDataSet = getPieDataSet()
-        summaryDataSets = [barDataSet, pieDataSet, barDataSet, pieDataSet]
-        summaryChartTypes = [.barChart, .pieChart, .barChart, .pieChart]
+    // Generate bar chart data sets.
+    func getCasesDataSet(chartType: ChartType) -> CovidInformation {
+        if let todayCases = globalSummary?.todayCases, let criticalCases = globalSummary?.critical, let casesPerMillion = globalSummary?.casesPerOneMillion, let activeCasesPerMillion = globalSummary?.activePerOneMillion, let criticalPerMillion = globalSummary?.criticalPerOneMillion {
+            let entries = [Double(todayCases), Double(criticalCases), Double(casesPerMillion), Double(activeCasesPerMillion), Double(criticalPerMillion)]
+            let labels = ["Cases today", "Critical cases", "Cases per million", "Active cases per million", "Critical per million"]
+            switch chartType {
+            case .barChart:
+                return (generateBarDataSet(entries: entries), labels)
+            case .pieChart:
+                return (generatePieDataSet(entries: entries, labels: labels), labels)
+            case .lineChart:
+                return (generateLineDataSet(entries: entries), labels)
+            case .horizontalBarChart:
+                return (generateBarDataSet(entries: entries), labels)
+            }
+        }
+        return (nil, nil)
     }
 
     // Generate bar chart data sets.
-    private func getBarDataSet() -> BarChartDataSet? {
-        if let criticalCases = globalSummary?.critical, let todayCases = globalSummary?.todayCases, let criticalPerMillion = globalSummary?.criticalPerOneMillion, let activePerMillion = globalSummary?.activePerOneMillion {
-            let entries = [BarChartDataEntry(x: 0, y: Double(todayCases)), BarChartDataEntry(x: 1, y: Double(criticalCases)), BarChartDataEntry(x: 2, y: Double(activePerMillion)), BarChartDataEntry(x: 3, y: Double(criticalPerMillion))]
-            let dataSet = BarChartDataSet(entries: entries)
-            return dataSet
+    func getDeathsDataSet(chartType: ChartType) -> CovidInformation {
+        if let todayDeaths = globalSummary?.todayDeaths, let deathsPerMillion = globalSummary?.deathsPerOneMillion {
+            let entries = [Double(todayDeaths), Double(deathsPerMillion)]
+            let labels = ["Deaths today", "Deaths per million"]
+            switch chartType {
+            case .barChart:
+                return (generateBarDataSet(entries: entries), labels)
+            case .pieChart:
+                return (generatePieDataSet(entries: entries, labels: labels), labels)
+            case .lineChart:
+                return (generateLineDataSet(entries: entries), labels)
+            case .horizontalBarChart:
+                return (generateBarDataSet(entries: entries), labels)
+            }
         }
-        return nil
+        return (nil, nil)
     }
 
-    // Generate pie data sets.
-    private func getPieDataSet() -> PieChartDataSet? {
-        if let criticalCases = globalSummary?.critical, let todayCases = globalSummary?.todayCases, let criticalPerMillion = globalSummary?.criticalPerOneMillion, let activePerMillion = globalSummary?.activePerOneMillion {
-            let entries = [PieChartDataEntry(value: Double(todayCases), label: "Today cases"), PieChartDataEntry(value: Double(criticalCases), label: "Critical cases"), PieChartDataEntry(value: Double(activePerMillion), label: "Active per million"), PieChartDataEntry(value: Double(criticalPerMillion), label: "Critical per million")]
-            let dataSet = PieChartDataSet(entries: entries)
-            return dataSet
+    func getRecoveryDataSet(chartType: ChartType) -> CovidInformation {
+        if let todayRecoveries = globalSummary?.todayRecovered, let recoveriesPerMillion = globalSummary?.recoveredPerOneMillion {
+            let entries = [Double(todayRecoveries), Double(recoveriesPerMillion)]
+            let labels = ["Recovered today", "Recoveries per million"]
+            switch chartType {
+            case .barChart:
+                return (generateBarDataSet(entries: entries), labels)
+            case .pieChart:
+                return (generatePieDataSet(entries: entries, labels: labels), labels)
+            case .lineChart:
+                return (generateLineDataSet(entries: entries), labels)
+            case .horizontalBarChart:
+                return (generateBarDataSet(entries: entries), labels)
+            }
         }
-        return nil
+        return (nil, nil)
+    }
+
+    func getTestsDataSset(chartType: ChartType) -> CovidInformation {
+        if let testsPerMillion = globalSummary?.testsPerOneMillion {
+            let entries = [Double(testsPerMillion)]
+            let labels = ["Tests per million"]
+            switch chartType {
+            case .barChart:
+                return (generateBarDataSet(entries: entries), labels)
+            case .pieChart:
+                return (generatePieDataSet(entries: entries, labels: labels), labels)
+            case .lineChart:
+                return (generateLineDataSet(entries: entries), labels)
+            case .horizontalBarChart:
+                return (generateBarDataSet(entries: entries), labels)
+            }
+        }
+        return (nil, nil)
+    }
+
+
+    // MARK: - Private functions.
+
+    private func generateBarDataSet(entries: [Double]) -> BarChartDataSet? {
+        var dataEntries = [BarChartDataEntry]()
+        for (i, entry) in entries.enumerated() {
+            dataEntries.append(BarChartDataEntry(x: Double(i), y: entry))
+        }
+        let dataSet = BarChartDataSet(entries: dataEntries)
+        return dataSet
+    }
+
+    private func generatePieDataSet(entries: [Double], labels: [String]) -> PieChartDataSet? {
+        var dataEntries = [PieChartDataEntry]()
+        for (i, entry) in entries.enumerated() {
+            dataEntries.append(PieChartDataEntry(value: entry, label: labels[i]))
+        }
+        let dataSet = PieChartDataSet(entries: dataEntries)
+        return dataSet
+    }
+
+    private func generateLineDataSet(entries: [Double]) -> LineChartDataSet? {
+        var dataEntries = [ChartDataEntry]()
+        for (i, entry) in entries.enumerated() {
+            dataEntries.append(ChartDataEntry(x: Double(i), y: entry))
+        }
+        let dataSet = LineChartDataSet(entries: dataEntries)
+        return dataSet
     }
 
     // API call for covid summary.

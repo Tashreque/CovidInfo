@@ -22,7 +22,20 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjC-Hx-N6v">
                                 <rect key="frame" x="8" y="8" width="261" height="326"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV7-cr-cA2">
+                                        <rect key="frame" x="16" y="16" width="229" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" name="mainChartBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="WV7-cr-cA2" secondAttribute="trailing" constant="16" id="jZ0-PY-yRV"/>
+                                    <constraint firstItem="WV7-cr-cA2" firstAttribute="top" secondItem="qjC-Hx-N6v" secondAttribute="top" constant="16" id="pfA-p7-Cz7"/>
+                                    <constraint firstItem="WV7-cr-cA2" firstAttribute="leading" secondItem="qjC-Hx-N6v" secondAttribute="leading" constant="16" id="s4y-cD-BbO"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" name="mainBackgroundColor"/>
@@ -46,6 +59,7 @@
             <connections>
                 <outlet property="chartContainerView" destination="qjC-Hx-N6v" id="fv2-3t-JRK"/>
                 <outlet property="mainContainerView" destination="WBH-i1-lVJ" id="sWY-wt-u7s"/>
+                <outlet property="mainDisplayParameterLabel" destination="WV7-cr-cA2" id="hlF-fF-syw"/>
             </connections>
             <point key="canvasLocation" x="68.840579710144937" y="84.375"/>
         </collectionViewCell>
@@ -55,7 +69,7 @@
             <color red="0.093999996781349182" green="0.0040000001899898052" blue="0.23499999940395355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainChartBackgroundColor">
-            <color red="0.39599999785423279" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.396078431372549" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

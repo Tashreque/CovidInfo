@@ -21,6 +21,7 @@
 		898E5BF8275A3C7E00585EF2 /* InformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E5BF6275A3C7E00585EF2 /* InformationCollectionViewCell.swift */; };
 		898E5BF9275A3C7E00585EF2 /* InformationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898E5BF7275A3C7E00585EF2 /* InformationCollectionViewCell.xib */; };
 		89A1FA39273AD8B400560C59 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A1FA38273AD8B400560C59 /* DashboardViewModel.swift */; };
+		89DD333D275E9CAE009C2323 /* ChartGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD333C275E9CAE009C2323 /* ChartGenerator.swift */; };
 		89DF03FF27380AD7003FB469 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF03FE27380AD7003FB469 /* NetworkManager.swift */; };
 		89DF040127380CD2003FB469 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF040027380CD2003FB469 /* NetworkError.swift */; };
 		89DF040527382070003FB469 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF040427382070003FB469 /* Summary.swift */; };
@@ -52,6 +53,7 @@
 		898E5BF6275A3C7E00585EF2 /* InformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCollectionViewCell.swift; sourceTree = "<group>"; };
 		898E5BF7275A3C7E00585EF2 /* InformationCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InformationCollectionViewCell.xib; sourceTree = "<group>"; };
 		89A1FA38273AD8B400560C59 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		89DD333C275E9CAE009C2323 /* ChartGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartGenerator.swift; sourceTree = "<group>"; };
 		89DF03FE27380AD7003FB469 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		89DF040027380CD2003FB469 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		89DF040427382070003FB469 /* Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				891EFDF62739856C00D9B971 /* Color.swift */,
+				89DD333C275E9CAE009C2323 /* ChartGenerator.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			files = (
 				89DF03FF27380AD7003FB469 /* NetworkManager.swift in Sources */,
 				89DF040127380CD2003FB469 /* NetworkError.swift in Sources */,
+				89DD333D275E9CAE009C2323 /* ChartGenerator.swift in Sources */,
 				898E5BF1275A3B1600585EF2 /* InformationTableViewCell.swift in Sources */,
 				89837342273BFC7B00857C6B /* UIView+ContextualChanges.swift in Sources */,
 				898CCFA7273691C7008DDE7A /* DashboardViewController.swift in Sources */,
