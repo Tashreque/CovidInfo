@@ -1,0 +1,1 @@
+This is a covid-19 information app based on the extensive API endpoints provided at https://disease.sh/docs/. This project demonstrates the basic usage of the Charts SDK at https://github.com/danielgindi/Charts. This app covers general information about the number of cases, deaths, recoveries and tests (so far). An MVVM pattern was used.
