@@ -23,18 +23,30 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjC-Hx-N6v">
                                 <rect key="frame" x="8" y="8" width="261" height="326"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV7-cr-cA2">
-                                        <rect key="frame" x="16" y="16" width="229" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wwy-yO-ksc">
+                                        <rect key="frame" x="16" y="16" width="229" height="21"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV7-cr-cA2">
+                                                <rect key="frame" x="0.0" y="0.0" width="229" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" name="mainBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="WV7-cr-cA2" firstAttribute="leading" secondItem="Wwy-yO-ksc" secondAttribute="leading" id="2vZ-Bl-5VR"/>
+                                            <constraint firstAttribute="bottom" secondItem="WV7-cr-cA2" secondAttribute="bottom" id="Fuk-09-eV1"/>
+                                            <constraint firstAttribute="trailing" secondItem="WV7-cr-cA2" secondAttribute="trailing" id="pRE-2n-5y7"/>
+                                            <constraint firstItem="WV7-cr-cA2" firstAttribute="top" secondItem="Wwy-yO-ksc" secondAttribute="top" id="q1h-0S-kzj"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" name="mainChartBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="WV7-cr-cA2" secondAttribute="trailing" constant="16" id="jZ0-PY-yRV"/>
-                                    <constraint firstItem="WV7-cr-cA2" firstAttribute="top" secondItem="qjC-Hx-N6v" secondAttribute="top" constant="16" id="pfA-p7-Cz7"/>
-                                    <constraint firstItem="WV7-cr-cA2" firstAttribute="leading" secondItem="qjC-Hx-N6v" secondAttribute="leading" constant="16" id="s4y-cD-BbO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wwy-yO-ksc" secondAttribute="trailing" constant="16" id="6cQ-cp-FNU"/>
+                                    <constraint firstItem="Wwy-yO-ksc" firstAttribute="top" secondItem="qjC-Hx-N6v" secondAttribute="top" constant="16" id="ajc-uD-Ebr"/>
+                                    <constraint firstItem="Wwy-yO-ksc" firstAttribute="leading" secondItem="qjC-Hx-N6v" secondAttribute="leading" constant="16" id="bjy-6f-pKw"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -59,6 +71,7 @@
             <connections>
                 <outlet property="chartContainerView" destination="qjC-Hx-N6v" id="fv2-3t-JRK"/>
                 <outlet property="mainContainerView" destination="WBH-i1-lVJ" id="sWY-wt-u7s"/>
+                <outlet property="mainDisplayParameterContainerView" destination="Wwy-yO-ksc" id="B2F-K8-B8Q"/>
                 <outlet property="mainDisplayParameterLabel" destination="WV7-cr-cA2" id="hlF-fF-syw"/>
             </connections>
             <point key="canvasLocation" x="68.840579710144937" y="84.375"/>

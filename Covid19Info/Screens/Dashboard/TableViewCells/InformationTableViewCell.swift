@@ -14,6 +14,7 @@ class InformationTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet connections.
     @IBOutlet weak var infoCollectionView: UICollectionView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
 
     // Helper variables.
     private var chartDataSets = [ChartDataSet?]()
@@ -48,12 +49,13 @@ class InformationTableViewCell: UITableViewCell {
         infoCollectionView.register(UINib(nibName: InformationCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: InformationCollectionViewCell.identifier)
     }
 
-    func configureCell(dataSets: [ChartDataSet?], labels: [[String]?], mainDisplayParameterKeys: [String], mainDisplayParameterValues: [String], chartTypes: [ChartType]) {
+    func configureCell(dataSets: [ChartDataSet?], labels: [[String]?], mainDisplayParameterKeys: [String], mainDisplayParameterValues: [String], chartTypes: [ChartType], cellHeight: CGFloat) {
         self.chartDataSets = dataSets
         self.chartLabels = labels
         self.mainDisplayParameterKeys = mainDisplayParameterKeys
         self.mainDisplayParameterValues = mainDisplayParameterValues
         self.chartTypes = chartTypes
+        self.heightConstraint.constant = cellHeight
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }

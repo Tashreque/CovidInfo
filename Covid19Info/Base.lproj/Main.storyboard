@@ -22,8 +22,19 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="coG-IC-V8z">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-gb-qI5">
+                                        <rect key="frame" x="16" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Fk5-MH-dmf"/>
+                                            <constraint firstAttribute="height" constant="44" id="UaO-0j-aM3"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="HPB-gb-qI5" firstAttribute="centerY" secondItem="coG-IC-V8z" secondAttribute="centerY" id="A4p-Vs-UE4"/>
+                                    <constraint firstItem="HPB-gb-qI5" firstAttribute="leading" secondItem="coG-IC-V8z" secondAttribute="leading" constant="16" id="HIV-7B-way"/>
                                     <constraint firstAttribute="height" constant="44" id="Mcs-Ap-qDH"/>
                                 </constraints>
                             </view>
@@ -79,6 +90,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="countryFlagImageView" destination="HPB-gb-qI5" id="JIn-sA-A28"/>
                         <outlet property="globalCasesTitleLabel" destination="I2e-n0-5CS" id="FBN-xd-IxX"/>
                         <outlet property="globalCasesValueLabel" destination="zEf-T0-WYB" id="pqV-Y9-4Y8"/>
                         <outlet property="informationTableView" destination="dHT-PK-xOQ" id="4vO-vC-7HB"/>

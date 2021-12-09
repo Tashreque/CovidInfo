@@ -20,16 +20,19 @@ class DashboardViewModel {
     /// The default chart types to display.
     var defaultDisplayChartTypes: [ChartType] = [.barChart, .pieChart, .horizontalBarChart, .barChart]
 
+    /// General information keys. These are to be displayed in the cells following the charts.
+    var generalInformationKeys = [String]()
+
+    /// General information values. These are to be displayed in the cells following the charts.
+    var generalInformationValues = [String]()
+
     /// The closure which is called in order to bind the view model with the view controller.
     var shouldBindNecessaryData: (() -> ())?
 
     /// The closure which is called in order to let the view controller know that an error message needs to be shown.
     var shouldDisplayErrorMessage: ((String) -> ())?
 
-    init() {
-        getNecessaryInitialData()
-    }
-
+    /// This function must be initially called in order to bind this view model with its corresponding view controller.
     func getNecessaryInitialData() {
         getCovidSummary { [weak self] (summary, errorMessage) in
             guard let self = self else { return }
@@ -46,6 +49,7 @@ class DashboardViewModel {
                     }
                     if let allCountryWiseInfo = allCountryWiseInfo {
                         self.dataForAllCountries = allCountryWiseInfo
+                        self.generateGeneralInformation()
                         self.shouldBindNecessaryData?()
                     }
                 }
@@ -129,6 +133,19 @@ class DashboardViewModel {
 
 
     // MARK: - Private functions.
+
+    private func generateGeneralInformation() {
+        let populationValue = String(globalSummary?.population ?? 0)
+        let activeCasesValue = String(globalSummary?.active ?? 0)
+        let activeCasesPerMillionValue = String(globalSummary?.activePerOneMillion ?? 0)
+        let affectedCountriesValue = String(globalSummary?.affectedCountries ?? 0)
+        let oneCasePerPeopleValue = String(globalSummary?.oneCasePerPeople ?? 0)
+        let oneDeathPerPeopleValue = String(globalSummary?.oneDeathPerPeople ?? 0)
+        let oneTestPerPeopleValue = String(globalSummary?.oneTestPerPeople ?? 0)
+
+        generalInformationValues = [populationValue, activeCasesValue, activeCasesPerMillionValue, affectedCountriesValue, oneCasePerPeopleValue, oneDeathPerPeopleValue, oneTestPerPeopleValue]
+        generalInformationKeys = ["Population", "Active cases", "Active cases per million", "Affected countries", "One case per people", "One death per people", "One test per people"]
+    }
 
     private func generateBarDataSet(entries: [Double]) -> BarChartDataSet? {
         var dataEntries = [BarChartDataEntry]()

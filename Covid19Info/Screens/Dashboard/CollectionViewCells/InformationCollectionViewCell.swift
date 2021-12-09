@@ -23,6 +23,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var chartContainerView: UIView!
     @IBOutlet weak var mainContainerView: UIView!
     @IBOutlet weak var mainDisplayParameterLabel: UILabel!
+    @IBOutlet weak var mainDisplayParameterContainerView: UIView!
 
     // Flag to only set chart if not set.
     private var hasDisplayedChart = false
@@ -36,6 +37,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         chartContainerView.layer.cornerRadius = 20
         mainDisplayParameterLabel.numberOfLines = 0
+        mainDisplayParameterContainerView.layer.cornerRadius = 10
     }
 
     func configureCell(dataSet: ChartDataSet?, labels: [String]?, mainParameterKeyToDisplay: String, mainParameterValueToDisplay: String, chartType: ChartType) {
