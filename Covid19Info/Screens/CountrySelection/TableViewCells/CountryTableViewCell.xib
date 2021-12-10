@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="73" id="KGk-i7-Jjw" customClass="CountryTableViewCell" customModule="Covid19Info" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OB1-bF-FYH" customClass="SDAnimatedImageView">
+                        <rect key="frame" x="16" y="24.5" width="48" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Hnp-Tc-90q"/>
+                            <constraint firstAttribute="width" constant="48" id="pGE-RZ-Xqe"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bangladesh" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWN-ef-sIB">
+                        <rect key="frame" x="80" y="24" width="224" height="25"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" name="mainChartBackgroundColor"/>
+                <constraints>
+                    <constraint firstItem="eWN-ef-sIB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="4Jw-7u-27l"/>
+                    <constraint firstAttribute="bottom" secondItem="eWN-ef-sIB" secondAttribute="bottom" constant="24" id="Jda-vs-YrO"/>
+                    <constraint firstItem="eWN-ef-sIB" firstAttribute="leading" secondItem="OB1-bF-FYH" secondAttribute="trailing" constant="16" id="fys-6p-NuN"/>
+                    <constraint firstItem="OB1-bF-FYH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jhA-6G-tBj"/>
+                    <constraint firstAttribute="trailing" secondItem="eWN-ef-sIB" secondAttribute="trailing" constant="16" id="piK-RC-uFk"/>
+                    <constraint firstItem="OB1-bF-FYH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qCY-Pr-I2U"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="countryNameLabel" destination="eWN-ef-sIB" id="zQS-b9-bVk"/>
+                <outlet property="flagImageView" destination="OB1-bF-FYH" id="jb5-Iq-X7u"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="103.45982142857143"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="mainChartBackgroundColor">
+            <color red="0.396078431372549" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

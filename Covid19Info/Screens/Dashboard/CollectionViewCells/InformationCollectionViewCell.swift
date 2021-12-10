@@ -37,7 +37,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         chartContainerView.layer.cornerRadius = 20
         mainDisplayParameterLabel.numberOfLines = 0
-        mainDisplayParameterContainerView.layer.cornerRadius = 10
+        mainDisplayParameterContainerView.layer.cornerRadius = 5
     }
 
     func configureCell(dataSet: ChartDataSet?, labels: [String]?, mainParameterKeyToDisplay: String, mainParameterValueToDisplay: String, chartType: ChartType) {

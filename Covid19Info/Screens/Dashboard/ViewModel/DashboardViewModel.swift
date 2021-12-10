@@ -131,6 +131,14 @@ class DashboardViewModel {
         return (nil, nil)
     }
 
+    func getAllCountryNames() -> [String] {
+        return dataForAllCountries.map({ $0.country ?? "" })
+    }
+
+    func getAllCountryFlagUrls() -> [String] {
+        return dataForAllCountries.map({ $0.countryInfo?.flag ?? "" })
+    }
+
 
     // MARK: - Private functions.
 

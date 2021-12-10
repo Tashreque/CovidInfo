@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -103,8 +104,72 @@
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="63.616071428571423"/>
         </scene>
+        <!--Country Selection View Controller-->
+        <scene sceneID="yBG-u0-VHR">
+            <objects>
+                <viewController storyboardIdentifier="CountrySelectionViewController" id="JSD-qF-GvK" customClass="CountrySelectionViewController" customModule="Covid19Info" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3FK-Ll-UsP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFV-Ok-xiG">
+                                <rect key="frame" x="0.0" y="44" width="300" height="818"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-Kd-GGP">
+                                        <rect key="frame" x="0.0" y="60" width="300" height="742"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                    <searchBar contentMode="redraw" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="imU-oQ-15O">
+                                        <rect key="frame" x="0.0" y="8" width="300" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="pRS-jc-mIE"/>
+                                        </constraints>
+                                        <color key="barTintColor" name="mainChartBackgroundColor"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="done"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" name="mainChartBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="imU-oQ-15O" firstAttribute="leading" secondItem="jFV-Ok-xiG" secondAttribute="leading" id="MEn-Oo-65N"/>
+                                    <constraint firstAttribute="trailing" secondItem="imU-oQ-15O" secondAttribute="trailing" id="PzV-Mr-12n"/>
+                                    <constraint firstItem="imU-oQ-15O" firstAttribute="top" secondItem="jFV-Ok-xiG" secondAttribute="top" constant="8" id="WUN-oX-7DA"/>
+                                    <constraint firstItem="0Fu-Kd-GGP" firstAttribute="top" secondItem="imU-oQ-15O" secondAttribute="bottom" constant="8" id="caU-ek-2pl"/>
+                                    <constraint firstItem="0Fu-Kd-GGP" firstAttribute="leading" secondItem="jFV-Ok-xiG" secondAttribute="leading" id="ig8-RL-1Xo"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Fu-Kd-GGP" secondAttribute="trailing" id="lcL-RK-eC8"/>
+                                    <constraint firstAttribute="width" constant="300" id="tx4-xL-cv0"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Fu-Kd-GGP" secondAttribute="bottom" constant="16" id="uPv-nM-tdT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cvy-ni-G9E"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jFV-Ok-xiG" firstAttribute="top" secondItem="cvy-ni-G9E" secondAttribute="top" id="7g0-A7-0PY"/>
+                            <constraint firstItem="jFV-Ok-xiG" firstAttribute="bottom" secondItem="cvy-ni-G9E" secondAttribute="bottom" id="Chb-wH-cqU"/>
+                            <constraint firstItem="jFV-Ok-xiG" firstAttribute="leading" secondItem="cvy-ni-G9E" secondAttribute="leading" id="FOn-1K-fTC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="countrySearchBar" destination="imU-oQ-15O" id="dJx-H4-KBJ"/>
+                        <outlet property="sideBarLeftConstraint" destination="FOn-1K-fTC" id="uz7-8P-6Vg"/>
+                        <outlet property="sideBarTableView" destination="0Fu-Kd-GGP" id="tjp-G8-3vC"/>
+                        <outlet property="sideBarView" destination="jFV-Ok-xiG" id="tm5-r1-18R"/>
+                        <outlet property="sideBarWidthConstraint" destination="tx4-xL-cv0" id="sQ3-V4-Vie"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5s-jW-Jbo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="902.89855072463774" y="63.616071428571423"/>
+        </scene>
     </scenes>
     <resources>
+        <namedColor name="mainChartBackgroundColor">
+            <color red="0.396078431372549" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

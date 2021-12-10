@@ -7,5 +7,6 @@ target 'Covid19Info' do
 
   # Pods for Covid19Info
   pod 'Charts'
+  pod 'SDWebImage', '~> 5.0'
 
 end

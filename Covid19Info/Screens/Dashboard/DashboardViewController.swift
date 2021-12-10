@@ -77,6 +77,7 @@ class DashboardViewController: UIViewController {
         informationTableView.register(UINib(nibName: GeneralInfoTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: GeneralInfoTableViewCell.identifier)
 
         countryFlagImageView.isUserInteractionEnabled = true
+        countryFlagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCountryFlag)))
     }
 
     private func populateUIWithData() {
@@ -89,6 +90,22 @@ class DashboardViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.informationTableView.reloadData()
+        }
+    }
+
+    @objc private func didTapCountryFlag() {
+        print("tapped")
+        let storyboard = UIStoryboard(name: StoryboardName.main, bundle: nil)
+        if let viewController = storyboard.instantiateViewController(withIdentifier: CountrySelectionViewController.identifier) as? CountrySelectionViewController {
+            viewController.modalPresentationStyle = .overFullScreen
+            viewController.countryNames = viewModel.getAllCountryNames()
+            viewController.countryIconUrls = viewModel.getAllCountryFlagUrls()
+            viewController.didChooseCountry = { [weak self] (chosenCountry) in
+                guard let self = self else { return }
+                debugPrint("Chosen country = \(chosenCountry)")
+            }
+
+            self.present(viewController, animated: false, completion: nil)
         }
     }
 }
