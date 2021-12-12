@@ -61,7 +61,7 @@ class DashboardViewController: UIViewController {
 
     private func setupUI() {
         self.view.backgroundColor = Color.mainBackgroundColor
-        globalCasesTitleLabel.text = "Global cases"
+        globalCasesTitleLabel.text = "Cases"
         globalCasesTitleLabel.textColor = Color.purpleTextColor
         globalCasesValueLabel.textColor = Color.purpleTextColor
 
@@ -81,10 +81,9 @@ class DashboardViewController: UIViewController {
     }
 
     private func populateUIWithData() {
-        if let summary = viewModel.globalSummary {
-            self.globalCasesValueLabel.text = "\(summary.cases ?? 0)"
-        } else {
-            globalCasesValueLabel.text = "--"
+        self.globalCasesValueLabel.text = "\(viewModel.cases ?? 0)"
+        if let url = viewModel.currentCountryFlagUrl {
+            self.countryFlagImageView.sd_setImage(with: url, completed: nil)
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -102,7 +101,7 @@ class DashboardViewController: UIViewController {
             viewController.countryIconUrls = viewModel.getAllCountryFlagUrls()
             viewController.didChooseCountry = { [weak self] (chosenCountry) in
                 guard let self = self else { return }
-                debugPrint("Chosen country = \(chosenCountry)")
+                self.viewModel.generateInformationToDisplay(for: chosenCountry)
             }
 
             self.present(viewController, animated: false, completion: nil)
@@ -137,7 +136,7 @@ extension DashboardViewController: UITableViewDelegate, UITableViewDataSource {
         let dataSets: [ChartDataSet?] = [casesDataSet, deathsDataSet, recoveryDataSet, testsDataSet]
         let labels = [casesData.1, deathsData.1, recoveryData.1, testsData.1]
         let mainDisplayParameterKeys = ["cases", "deaths", "recoveries", "tests"]
-        let mainDisplayParameterValues = [String(viewModel.globalSummary?.cases ?? 0), String(viewModel.globalSummary?.deaths ?? 0), String(viewModel.globalSummary?.recovered ?? 0), String(viewModel.globalSummary?.tests ?? 0)]
+        let mainDisplayParameterValues = [String(viewModel.cases ?? 0), String(viewModel.deaths ?? 0), String(viewModel.recoveries ?? 0), String(viewModel.tests ?? 0)]
         
         cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, mainDisplayParameterValues: mainDisplayParameterValues, chartTypes: viewModel.defaultDisplayChartTypes, cellHeight: tableView.bounds.height)
         return cell

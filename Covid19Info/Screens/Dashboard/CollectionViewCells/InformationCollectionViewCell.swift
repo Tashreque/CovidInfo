@@ -28,6 +28,9 @@ class InformationCollectionViewCell: UICollectionViewCell {
     // Flag to only set chart if not set.
     private var hasDisplayedChart = false
 
+    // The chartView so that it can be tracked.
+    var chartView: UIView?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -41,6 +44,10 @@ class InformationCollectionViewCell: UICollectionViewCell {
     }
 
     func configureCell(dataSet: ChartDataSet?, labels: [String]?, mainParameterKeyToDisplay: String, mainParameterValueToDisplay: String, chartType: ChartType) {
+        // Remove any previous chart.
+        chartView?.removeFromSuperview()
+
+        // Display all parameters.
         mainDisplayParameterLabel.text = "\(mainParameterValueToDisplay) \(mainParameterKeyToDisplay)"
         switch chartType {
         case .barChart:
@@ -70,6 +77,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartContainerView.addSubview(chartView)
         NSLayoutConstraint.activate([chartView.leftAnchor.constraint(equalTo: chartContainerView.leftAnchor, constant: 16), chartView.rightAnchor.constraint(equalTo: chartContainerView.rightAnchor, constant: -16), chartView.topAnchor.constraint(equalTo: mainDisplayParameterLabel.bottomAnchor, constant: 8), chartView.bottomAnchor.constraint(equalTo: chartContainerView.bottomAnchor, constant: -16)])
+        self.chartView = chartView
     }
 
 }
