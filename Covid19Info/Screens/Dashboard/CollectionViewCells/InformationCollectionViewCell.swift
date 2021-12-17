@@ -40,15 +40,16 @@ class InformationCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         chartContainerView.layer.cornerRadius = 20
         mainDisplayParameterLabel.numberOfLines = 0
-        mainDisplayParameterContainerView.layer.cornerRadius = 5
+        mainDisplayParameterContainerView.backgroundColor = .black
+        chartContainerView.clipsToBounds = true
     }
 
-    func configureCell(dataSet: ChartDataSet?, labels: [String]?, mainParameterKeyToDisplay: String, mainParameterValueToDisplay: String, chartType: ChartType) {
+    func configureCell(dataSet: ChartDataSet?, labels: [String]?, mainParameterKeyToDisplay: String, chartType: ChartType) {
         // Remove any previous chart.
         chartView?.removeFromSuperview()
 
         // Display all parameters.
-        mainDisplayParameterLabel.text = "\(mainParameterValueToDisplay) \(mainParameterKeyToDisplay)"
+        mainDisplayParameterLabel.text = "\(mainParameterKeyToDisplay)"
         switch chartType {
         case .barChart:
             if let dataSet = dataSet as? BarChartDataSet {
@@ -61,10 +62,8 @@ class InformationCollectionViewCell: UICollectionViewCell {
                 addChartToCell(chartView: pieChartView)
             }
         case .lineChart:
-            if let dataSet = dataSet as? LineChartDataSet {
-                let lineGraphView = ChartGenerator.generateLineGraph(dataSet: dataSet, labels: labels)
-                addChartToCell(chartView: lineGraphView)
-            }
+            let lineGraphView = ChartGenerator.generateLineGraph(dataSet: LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 1), ChartDataEntry(x: 1, y: 7), ChartDataEntry(x: 2, y: 3.75), ChartDataEntry(x: 3, y: 11.33), ChartDataEntry(x: 4, y: 6.50)]), labels: labels)
+            addChartToCell(chartView: lineGraphView)
         case .horizontalBarChart:
             if let dataSet = dataSet as? BarChartDataSet {
                 let horizontalBarChartView = ChartGenerator.generateHorizontalBarChart(dataSet: dataSet, labels: labels)

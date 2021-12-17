@@ -80,7 +80,7 @@ struct ChartGenerator {
         pieChartView.drawEntryLabelsEnabled = false
         pieChartView.legend.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         pieChartView.legend.textColor = .white
-        pieChartView.drawHoleEnabled = false
+        pieChartView.holeRadiusPercent = 0.10
 
         return pieChartView
     }

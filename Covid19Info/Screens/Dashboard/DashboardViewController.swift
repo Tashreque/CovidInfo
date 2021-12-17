@@ -124,21 +124,18 @@ extension DashboardViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
-        let casesData = viewModel.getCasesDataSet(chartType: .barChart)
-        let deathsData = viewModel.getDeathsDataSet(chartType: .pieChart)
-        let recoveryData = viewModel.getRecoveryDataSet(chartType: .horizontalBarChart)
-        let testsData = viewModel.getTestsDataSset(chartType: .barChart)
-        let casesDataSet = casesData.0
-        let deathsDataSet = deathsData.0
-        let recoveryDataSet = recoveryData.0
-        let testsDataSet = testsData.0
+        let data = viewModel.getFirstDataSet(chartType: .pieChart)
+        let dataPerMillion = viewModel.getSecondDataSet(chartType: .barChart)
+        let todayData = viewModel.getThirdDataSet(chartType: .horizontalBarChart)
+        let dataSet = data.0
+        let dataSetPerMillion = dataPerMillion.0
+        let todayDataSet = todayData.0
 
-        let dataSets: [ChartDataSet?] = [casesDataSet, deathsDataSet, recoveryDataSet, testsDataSet]
-        let labels = [casesData.1, deathsData.1, recoveryData.1, testsData.1]
-        let mainDisplayParameterKeys = ["cases", "deaths", "recoveries", "tests"]
-        let mainDisplayParameterValues = [String(viewModel.cases ?? 0), String(viewModel.deaths ?? 0), String(viewModel.recoveries ?? 0), String(viewModel.tests ?? 0)]
+        let dataSets: [ChartDataSet?] = [dataSet, dataSetPerMillion, todayDataSet]
+        let labels = [data.1, dataPerMillion.1, todayData.1]
+        let mainDisplayParameterKeys = ["Covid data", "Covid data (numbers/million)", "Covid data (today)"]
         
-        cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, mainDisplayParameterValues: mainDisplayParameterValues, chartTypes: viewModel.defaultDisplayChartTypes, cellHeight: tableView.bounds.height)
+        cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, chartTypes: [.pieChart, .barChart, .horizontalBarChart], cellHeight: tableView.bounds.height)
         return cell
     }
 }

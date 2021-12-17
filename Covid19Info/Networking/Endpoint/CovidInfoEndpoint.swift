@@ -14,6 +14,7 @@ enum CovidInfoEndpoint: Endpoint {
     case informationOfAllCountries(day: String = "", sort: String = "")
     case countryWiseInformation(country: String, day: String = "")
     case continentWiseInformation(continent: String, day: String = "")
+    case historicalCovidInformation
 
     var scheme: String {
         switch self {
@@ -39,6 +40,8 @@ enum CovidInfoEndpoint: Endpoint {
             return "/v3/covid-19/countries/\(country)"
         case .continentWiseInformation(let continent, _):
             return "/v3/covid-19/continents/\(continent)"
+        case .historicalCovidInformation:
+            return "v3/covid-19/historical/all"
         }
     }
 
@@ -60,6 +63,8 @@ enum CovidInfoEndpoint: Endpoint {
             return day.isEmpty ? [defaultQueryItem] : [URLQueryItem(name: day, value: day), defaultQueryItem]
         case .continentWiseInformation(_, let day):
             return day.isEmpty ? [defaultQueryItem] : [URLQueryItem(name: day, value: day), defaultQueryItem]
+        case .historicalCovidInformation:
+            return [URLQueryItem(name: "lastdays", value: "all")]
         }
     }
 

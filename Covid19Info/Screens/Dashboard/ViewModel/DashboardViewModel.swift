@@ -114,10 +114,10 @@ class DashboardViewModel {
     }
 
     // Generate bar chart data sets.
-    func getCasesDataSet(chartType: ChartType) -> CovidInformation {
-        if let todayCases = todayCases, let criticalCases = criticalCases, let casesPerMillion = casesPerMillion, let activeCasesPerMillion = activeCasesPerMillion, let criticalPerMillion = criticalPerMillion {
-            let entries = [Double(todayCases), Double(criticalCases), Double(casesPerMillion), Double(activeCasesPerMillion), Double(criticalPerMillion)]
-            let labels = ["Cases today", "Critical cases", "Cases per million", "Active cases per million", "Critical per million"]
+    func getFirstDataSet(chartType: ChartType) -> CovidInformation {
+        if let cases = cases, let criticalCases = criticalCases, let deaths = deaths, let recoveries = recoveries {
+            let entries = [Double(cases), Double(criticalCases), Double(deaths), Double(recoveries)]
+            let labels = ["Cases", "Critical Cases", "Deaths", "Recoveries"]
             switch chartType {
             case .barChart:
                 return (generateBarDataSet(entries: entries), labels)
@@ -133,10 +133,10 @@ class DashboardViewModel {
     }
 
     // Generate bar chart data sets.
-    func getDeathsDataSet(chartType: ChartType) -> CovidInformation {
-        if let todayDeaths = todayDeaths, let deathsPerMillion = deathsPerMillion {
-            let entries = [Double(todayDeaths), Double(deathsPerMillion)]
-            let labels = ["Deaths today", "Deaths per million"]
+    func getSecondDataSet(chartType: ChartType) -> CovidInformation {
+        if let casesPerMillion = casesPerMillion, let deathsPerMillion = deathsPerMillion, let recoveriesPerMillion = recoveriesPerMillion {
+            let entries = [Double(casesPerMillion), Double(deathsPerMillion), Double(recoveriesPerMillion)]
+            let labels = ["Cases/Million", "Deaths/Million", "Recoveries/Million"]
             switch chartType {
             case .barChart:
                 return (generateBarDataSet(entries: entries), labels)
@@ -151,28 +151,10 @@ class DashboardViewModel {
         return (nil, nil)
     }
 
-    func getRecoveryDataSet(chartType: ChartType) -> CovidInformation {
-        if let todayRecoveries = todayRecoveries, let recoveriesPerMillion = recoveriesPerMillion {
-            let entries = [Double(todayRecoveries), Double(recoveriesPerMillion)]
-            let labels = ["Recovered today", "Recoveries per million"]
-            switch chartType {
-            case .barChart:
-                return (generateBarDataSet(entries: entries), labels)
-            case .pieChart:
-                return (generatePieDataSet(entries: entries, labels: labels), labels)
-            case .lineChart:
-                return (generateLineDataSet(entries: entries), labels)
-            case .horizontalBarChart:
-                return (generateBarDataSet(entries: entries), labels)
-            }
-        }
-        return (nil, nil)
-    }
-
-    func getTestsDataSset(chartType: ChartType) -> CovidInformation {
-        if let testsPerMillion = testsPerMillion {
-            let entries = [Double(testsPerMillion)]
-            let labels = ["Tests per million"]
+    func getThirdDataSet(chartType: ChartType) -> CovidInformation {
+        if let todayCases = todayCases, let todayDeaths = todayDeaths, let todayRecoveries = todayRecoveries {
+            let entries = [Double(todayCases), Double(todayDeaths), Double(todayRecoveries)]
+            let labels = ["Cases today", "Deaths today", "Recoveries today"]
             switch chartType {
             case .barChart:
                 return (generateBarDataSet(entries: entries), labels)
@@ -208,13 +190,15 @@ class DashboardViewModel {
         let populationValue = String(totalPopulation ?? 0)
         let activeCasesValue = String(activeCases ?? 0)
         let activeCasesPerMillionValue = String(activeCasesPerMillion ?? 0)
+        let testsValue = String(tests ?? 0)
+        let testsPerMillionValue = String(testsPerMillion ?? 0)
         let affectedCountriesValue = String(affectedCountries ?? 0)
         let oneCasePerPeopleValue = String(oneCasePerPeople ?? 0)
         let oneDeathPerPeopleValue = String(oneDeathPerPeople ?? 0)
         let oneTestPerPeopleValue = String(oneTestPerPeople ?? 0)
 
-        generalInformationValues = [populationValue, activeCasesValue, activeCasesPerMillionValue, affectedCountriesValue, oneCasePerPeopleValue, oneDeathPerPeopleValue, oneTestPerPeopleValue]
-        generalInformationKeys = ["Population", "Active cases", "Active cases per million", "Affected countries", "One case per people", "One death per people", "One test per people"]
+        generalInformationValues = [populationValue, activeCasesValue, activeCasesPerMillionValue, testsValue, testsPerMillionValue, affectedCountriesValue, oneCasePerPeopleValue, oneDeathPerPeopleValue, oneTestPerPeopleValue]
+        generalInformationKeys = ["Population", "Active cases", "Active cases per million", "Tests", "Tests per million", "Affected countries", "One case per people", "One death per people", "One test per people"]
     }
 
     private func generateBarDataSet(entries: [Double]) -> BarChartDataSet? {
@@ -262,6 +246,18 @@ class DashboardViewModel {
             switch result {
             case .success(let dataForAllCountries):
                 completion(dataForAllCountries, nil)
+            case .failure(let error):
+                completion(nil, error.errorMessage)
+            }
+        }
+    }
+
+    // API call for historical covid info.
+    private func getHistoricalInfo(completion: @escaping (HistoricalInfo?, String?) -> ()) {
+        NetworkManager.shared.getRequest(endpoint: CovidInfoEndpoint.historicalCovidInformation) { (result: Result<HistoricalInfo, NetworkError>) in
+            switch result {
+            case .success(let historicalData):
+                completion(historicalData, nil)
             case .failure(let error):
                 completion(nil, error.errorMessage)
             }
