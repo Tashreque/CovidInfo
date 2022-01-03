@@ -38,9 +38,10 @@ class InformationCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupUI() {
-        chartContainerView.layer.cornerRadius = 20
+        chartContainerView.layer.cornerRadius = 25
         mainDisplayParameterLabel.numberOfLines = 0
-        mainDisplayParameterContainerView.backgroundColor = .black
+        mainDisplayParameterLabel.textColor = Color.mainBackgroundColor
+        mainDisplayParameterContainerView.backgroundColor = Color.purpleTextColor
         chartContainerView.clipsToBounds = true
     }
 
@@ -62,7 +63,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
                 addChartToCell(chartView: pieChartView)
             }
         case .lineChart:
-            let lineGraphView = ChartGenerator.generateLineGraph(dataSet: LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 1), ChartDataEntry(x: 1, y: 7), ChartDataEntry(x: 2, y: 3.75), ChartDataEntry(x: 3, y: 11.33), ChartDataEntry(x: 4, y: 6.50)]), labels: labels)
+            let lineGraphView = ChartGenerator.generateLineGraph(dataSets: [LineChartDataSet(entries: [ChartDataEntry(x: 0, y: 1), ChartDataEntry(x: 1, y: 7), ChartDataEntry(x: 2, y: 3.75), ChartDataEntry(x: 3, y: 11.33), ChartDataEntry(x: 4, y: 6.50)])], labels: labels)
             addChartToCell(chartView: lineGraphView)
         case .horizontalBarChart:
             if let dataSet = dataSet as? BarChartDataSet {

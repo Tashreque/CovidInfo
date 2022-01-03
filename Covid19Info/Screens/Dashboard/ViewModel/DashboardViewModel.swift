@@ -18,6 +18,9 @@ class DashboardViewModel {
     // Global summary.
     private var globalSummary: Summary?
 
+    // Historical data.
+    private var historicalInfo: HistoricalInfo?
+
     /// The default chart types to display.
     var defaultDisplayChartTypes: [ChartType] = [.barChart, .pieChart, .horizontalBarChart, .barChart]
 
@@ -72,26 +75,39 @@ class DashboardViewModel {
 
     /// This function must be initially called in order to bind this view model with its corresponding view controller.
     func getNecessaryInitialData() {
-        getCovidSummary { [weak self] (summary, errorMessage) in
+        // Get historical information.
+        getHistoricalInfo { [weak self] (historicalInfo, errorMessage) in
             guard let self = self else { return }
             guard errorMessage == nil else {
                 self.shouldDisplayErrorMessage?(errorMessage!)
                 return
             }
-            if let summary = summary {
-                // Map data here.
-                self.globalSummary = summary
-                self.mapDataToViewModelParameters(summary: summary)
 
-                self.getAllCountryWiseInformation { allCountryWiseInfo, errorMessage in
+            if let historicalInfo = historicalInfo {
+                self.historicalInfo = historicalInfo
+
+                // Get worldwide summary.
+                self.getCovidSummary { (summary, errorMessage) in
                     guard errorMessage == nil else {
                         self.shouldDisplayErrorMessage?(errorMessage!)
                         return
                     }
-                    if let allCountryWiseInfo = allCountryWiseInfo {
-                        self.dataForAllCountries = allCountryWiseInfo
-                        self.generateGeneralInformation()
-                        self.shouldBindNecessaryData?()
+                    if let summary = summary {
+                        // Map data here.
+                        self.globalSummary = summary
+                        self.mapDataToViewModelParameters(summary: summary)
+
+                        self.getAllCountryWiseInformation { allCountryWiseInfo, errorMessage in
+                            guard errorMessage == nil else {
+                                self.shouldDisplayErrorMessage?(errorMessage!)
+                                return
+                            }
+                            if let allCountryWiseInfo = allCountryWiseInfo {
+                                self.dataForAllCountries = allCountryWiseInfo
+                                self.generateGeneralInformation()
+                                self.shouldBindNecessaryData?()
+                            }
+                        }
                     }
                 }
             }
@@ -113,6 +129,43 @@ class DashboardViewModel {
         }
     }
 
+    func getHistoricalDataSet() -> [LineChartDataSet?] {
+        var caseDates = [Date]()
+        var deathDates = [Date]()
+        var recoveredDates = [Date]()
+
+        if let casesDict = historicalInfo?.cases, let deathDict = historicalInfo?.deaths, let recoveredDict = historicalInfo?.recovered {
+            let dateFormat = "m/d/yy"
+            for each in casesDict {
+                caseDates.append(each.key.getDate(stringFormat: dateFormat))
+            }
+            for each in deathDict {
+                deathDates.append(each.key.getDate(stringFormat: dateFormat))
+            }
+            for each in recoveredDict {
+                recoveredDates.append(each.key.getDate(stringFormat: dateFormat))
+            }
+            caseDates.sort()
+            deathDates.sort()
+            recoveredDates.sort()
+
+            let caseDateStrings = caseDates.map({ $0.getDateString(format: dateFormat) })
+            let deathDateStrings = deathDates.map({ $0.getDateString(format: dateFormat) })
+            let recoveredDateStrings = recoveredDates.map({ $0.getDateString(format: dateFormat) })
+
+            let caseEntries = caseDateStrings.map({ Double(casesDict[$0] ?? 0) })
+            let deathEntries = deathDateStrings.map({ Double(deathDict[$0] ?? 0) })
+            let recoveredEntries = recoveredDateStrings.map({ Double(recoveredDict[$0] ?? 0) })
+
+            let caseDataSet = generateLineDataSet(entries: caseEntries, color: .systemRed)
+            let deathDataSet = generateLineDataSet(entries: deathEntries, color: .systemBlue)
+            let recoveredDataSet = generateLineDataSet(entries: recoveredEntries, color: .systemGreen)
+
+            return [caseDataSet, deathDataSet, recoveredDataSet]
+        }
+        return []
+    }
+
     // Generate bar chart data sets.
     func getFirstDataSet(chartType: ChartType) -> CovidInformation {
         if let cases = cases, let criticalCases = criticalCases, let deaths = deaths, let recoveries = recoveries {
@@ -124,7 +177,7 @@ class DashboardViewModel {
             case .pieChart:
                 return (generatePieDataSet(entries: entries, labels: labels), labels)
             case .lineChart:
-                return (generateLineDataSet(entries: entries), labels)
+                return (generateLineDataSet(entries: entries, color: .black), labels)
             case .horizontalBarChart:
                 return (generateBarDataSet(entries: entries), labels)
             }
@@ -143,7 +196,7 @@ class DashboardViewModel {
             case .pieChart:
                 return (generatePieDataSet(entries: entries, labels: labels), labels)
             case .lineChart:
-                return (generateLineDataSet(entries: entries), labels)
+                return (generateLineDataSet(entries: entries, color: .black), labels)
             case .horizontalBarChart:
                 return (generateBarDataSet(entries: entries), labels)
             }
@@ -161,7 +214,7 @@ class DashboardViewModel {
             case .pieChart:
                 return (generatePieDataSet(entries: entries, labels: labels), labels)
             case .lineChart:
-                return (generateLineDataSet(entries: entries), labels)
+                return (generateLineDataSet(entries: entries, color: .black), labels)
             case .horizontalBarChart:
                 return (generateBarDataSet(entries: entries), labels)
             }
@@ -219,12 +272,16 @@ class DashboardViewModel {
         return dataSet
     }
 
-    private func generateLineDataSet(entries: [Double]) -> LineChartDataSet? {
+    private func generateLineDataSet(entries: [Double], color: UIColor) -> LineChartDataSet? {
         var dataEntries = [ChartDataEntry]()
         for (i, entry) in entries.enumerated() {
             dataEntries.append(ChartDataEntry(x: Double(i), y: entry))
         }
         let dataSet = LineChartDataSet(entries: dataEntries)
+        dataSet.drawCirclesEnabled = false
+        dataSet.drawCircleHoleEnabled = false
+        dataSet.colors = [color]
+
         return dataSet
     }
 

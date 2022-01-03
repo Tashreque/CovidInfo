@@ -23,20 +23,17 @@ struct ChartGenerator {
         xAxis.labelPosition = .bothSided
         xAxis.axisLineColor = Color.mainBackgroundColor
         xAxis.gridColor = Color.mainBackgroundColor
-        xAxis.axisLineWidth = 2
         xAxis.granularity = 1
 
         let leftAxis = barChartView.leftAxis
         leftAxis.axisLineColor = Color.mainBackgroundColor
         leftAxis.labelTextColor = .white
-        leftAxis.axisLineWidth = 2
         leftAxis.gridColor = Color.mainBackgroundColor
 
         let rightAxis = barChartView.rightAxis
         rightAxis.drawLabelsEnabled = false
         rightAxis.axisLineColor = Color.mainBackgroundColor
         rightAxis.labelTextColor = .white
-        rightAxis.axisLineWidth = 2
         rightAxis.gridColor = Color.mainBackgroundColor
 
         let data = BarChartData(dataSet: dataSet)
@@ -86,14 +83,10 @@ struct ChartGenerator {
     }
 
     /// Called to generate a line graph for this project.
-    static func generateLineGraph(dataSet: LineChartDataSet, labels: [String]?) -> LineChartView {
+    static func generateLineGraph(dataSets: [LineChartDataSet], labels: [String]?) -> LineChartView {
         let lineChartView = LineChartView()
 
-        dataSet.colors = ChartColorTemplates.joyful()
-        dataSet.valueTextColor = .white
-        dataSet.valueFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-
-        let data = LineChartData(dataSet: dataSet)
+        let data = LineChartData(dataSets: dataSets)
         lineChartView.data = data
         lineChartView.animate(xAxisDuration: 0.5)
         lineChartView.animate(yAxisDuration: 0.5)
@@ -114,21 +107,18 @@ struct ChartGenerator {
         xAxis.labelPosition = .bothSided
         xAxis.axisLineColor = Color.mainBackgroundColor
         xAxis.gridColor = Color.mainBackgroundColor
-        xAxis.axisLineWidth = 2
         xAxis.granularity = 1
 
         let leftAxis = barChartView.leftAxis
         leftAxis.drawLabelsEnabled = false
         leftAxis.axisLineColor = Color.mainBackgroundColor
         leftAxis.labelTextColor = .white
-        leftAxis.axisLineWidth = 2
         leftAxis.gridColor = Color.mainBackgroundColor
 
         let rightAxis = barChartView.rightAxis
         rightAxis.axisLineColor = Color.mainBackgroundColor
         rightAxis.labelTextColor = .white
         rightAxis.gridColor = Color.mainBackgroundColor
-        rightAxis.axisLineWidth = 2
 
         let data = BarChartData(dataSet: dataSet)
         barChartView.data = data

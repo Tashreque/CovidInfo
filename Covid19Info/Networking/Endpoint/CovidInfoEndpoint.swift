@@ -41,7 +41,7 @@ enum CovidInfoEndpoint: Endpoint {
         case .continentWiseInformation(let continent, _):
             return "/v3/covid-19/continents/\(continent)"
         case .historicalCovidInformation:
-            return "v3/covid-19/historical/all"
+            return "/v3/covid-19/historical/all"
         }
     }
 

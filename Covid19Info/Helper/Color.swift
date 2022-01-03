@@ -12,4 +12,5 @@ struct Color {
     static let mainBackgroundColor = UIColor(named: "mainBackgroundColor")!
     static let mainChartBackgroundColor = UIColor(named: "mainChartBackgroundColor")!
     static let purpleTextColor = UIColor(named: "purpleTextColor")
+    static let alternateChartBackgroundColor = UIColor(named: "alternateChartBackgroundColor")
 }

@@ -15,8 +15,6 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var informationTableView: UITableView!
     @IBOutlet weak var navigationBarContainerView: UIView!
     @IBOutlet weak var navigationBarView: UIView!
-    @IBOutlet weak var globalCasesTitleLabel: UILabel!
-    @IBOutlet weak var globalCasesValueLabel: UILabel!
     @IBOutlet weak var countryFlagImageView: UIImageView!
 
     // The view model for this view controller.
@@ -61,10 +59,6 @@ class DashboardViewController: UIViewController {
 
     private func setupUI() {
         self.view.backgroundColor = Color.mainBackgroundColor
-        globalCasesTitleLabel.text = "Cases"
-        globalCasesTitleLabel.textColor = Color.purpleTextColor
-        globalCasesValueLabel.textColor = Color.purpleTextColor
-
         navigationBarContainerView.backgroundColor = Color.mainBackgroundColor
         navigationBarView.backgroundColor = Color.mainBackgroundColor
         tableViewContainerView.backgroundColor = Color.mainBackgroundColor
@@ -75,13 +69,14 @@ class DashboardViewController: UIViewController {
         informationTableView.backgroundColor = Color.mainBackgroundColor
         informationTableView.register(UINib(nibName: InformationTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: InformationTableViewCell.identifier)
         informationTableView.register(UINib(nibName: GeneralInfoTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: GeneralInfoTableViewCell.identifier)
+        informationTableView.register(UINib(nibName: CasesTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CasesTableViewCell.identifier)
+        informationTableView.register(UINib(nibName: HistoricalDataTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HistoricalDataTableViewCell.identifier)
 
         countryFlagImageView.isUserInteractionEnabled = true
         countryFlagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCountryFlag)))
     }
 
     private func populateUIWithData() {
-        self.globalCasesValueLabel.text = "\(viewModel.cases ?? 0)"
         if let url = viewModel.currentCountryFlagUrl {
             self.countryFlagImageView.sd_setImage(with: url, completed: nil)
         }
@@ -111,32 +106,42 @@ class DashboardViewController: UIViewController {
 
 extension DashboardViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (viewModel.generalInformationKeys.count + 1)
+        return (viewModel.generalInformationKeys.count + 3)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row > 0 {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CasesTableViewCell.identifier, for: indexPath) as! CasesTableViewCell
+            cell.configureCell(title: "Cases", value: viewModel.cases)
+            return cell
+        } else if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: HistoricalDataTableViewCell.identifier, for: indexPath) as! HistoricalDataTableViewCell
+            let dataSets = viewModel.getHistoricalDataSet()
+            cell.configureCell(cellHeight: 0.40 * tableView.bounds.height, dataSets: dataSets)
+            return cell
+        } else if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
+            let data = viewModel.getFirstDataSet(chartType: .pieChart)
+            let dataPerMillion = viewModel.getSecondDataSet(chartType: .barChart)
+            let todayData = viewModel.getThirdDataSet(chartType: .horizontalBarChart)
+            let dataSet = data.0
+            let dataSetPerMillion = dataPerMillion.0
+            let todayDataSet = todayData.0
+
+            let dataSets: [ChartDataSet?] = [dataSet, dataSetPerMillion, todayDataSet]
+            let labels = [data.1, dataPerMillion.1, todayData.1]
+            let mainDisplayParameterKeys = ["Covid data", "Covid data (numbers/million)", "Covid data (today)"]
+
+            cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, chartTypes: [.pieChart, .barChart, .horizontalBarChart], cellHeight: (0.72 * self.view.bounds.height))
+            return cell
+        } else {
+            let rowNumber = indexPath.row - 3
             let cell = tableView.dequeueReusableCell(withIdentifier: GeneralInfoTableViewCell.identifier, for: indexPath) as! GeneralInfoTableViewCell
-            let key = viewModel.generalInformationKeys[indexPath.row - 1]
-            let value = viewModel.generalInformationValues[indexPath.row - 1]
+            let key = viewModel.generalInformationKeys[rowNumber]
+            let value = viewModel.generalInformationValues[rowNumber]
             cell.configureCell(keyString: key, valueString: value)
             return cell
         }
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
-        let data = viewModel.getFirstDataSet(chartType: .pieChart)
-        let dataPerMillion = viewModel.getSecondDataSet(chartType: .barChart)
-        let todayData = viewModel.getThirdDataSet(chartType: .horizontalBarChart)
-        let dataSet = data.0
-        let dataSetPerMillion = dataPerMillion.0
-        let todayDataSet = todayData.0
-
-        let dataSets: [ChartDataSet?] = [dataSet, dataSetPerMillion, todayDataSet]
-        let labels = [data.1, dataPerMillion.1, todayData.1]
-        let mainDisplayParameterKeys = ["Covid data", "Covid data (numbers/million)", "Covid data (today)"]
-        
-        cell.configureCell(dataSets: dataSets, labels: labels, mainDisplayParameterKeys: mainDisplayParameterKeys, chartTypes: [.pieChart, .barChart, .horizontalBarChart], cellHeight: tableView.bounds.height)
-        return cell
     }
 }
 
