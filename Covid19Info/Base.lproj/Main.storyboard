@@ -24,19 +24,42 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="coG-IC-V8z">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-gb-qI5">
-                                        <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Rt-wZ-94t">
+                                        <rect key="frame" x="16" y="7" width="69.5" height="30"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ieb-Xw-z2u">
+                                                <rect key="frame" x="8" y="3" width="53.5" height="24"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-gb-qI5">
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="30" id="Fk5-MH-dmf"/>
+                                                            <constraint firstAttribute="height" constant="24" id="UaO-0j-aM3"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaZ-J1-Bpk">
+                                                        <rect key="frame" x="38" y="0.0" width="15.5" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <color key="textColor" name="mainBackgroundColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Fk5-MH-dmf"/>
-                                            <constraint firstAttribute="height" constant="30" id="UaO-0j-aM3"/>
+                                            <constraint firstAttribute="height" constant="30" id="Lmx-15-6ta"/>
+                                            <constraint firstAttribute="trailing" secondItem="ieb-Xw-z2u" secondAttribute="trailing" constant="8" id="dBB-3M-SK7"/>
+                                            <constraint firstItem="ieb-Xw-z2u" firstAttribute="leading" secondItem="4Rt-wZ-94t" secondAttribute="leading" constant="8" id="uoo-x4-olH"/>
+                                            <constraint firstItem="ieb-Xw-z2u" firstAttribute="centerY" secondItem="4Rt-wZ-94t" secondAttribute="centerY" id="w65-3Y-8mA"/>
                                         </constraints>
-                                    </imageView>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="HPB-gb-qI5" firstAttribute="centerY" secondItem="coG-IC-V8z" secondAttribute="centerY" id="A4p-Vs-UE4"/>
-                                    <constraint firstItem="HPB-gb-qI5" firstAttribute="leading" secondItem="coG-IC-V8z" secondAttribute="leading" constant="16" id="HIV-7B-way"/>
+                                    <constraint firstItem="4Rt-wZ-94t" firstAttribute="leading" secondItem="coG-IC-V8z" secondAttribute="leading" constant="16" id="E0u-IO-tgV"/>
                                     <constraint firstAttribute="height" constant="44" id="Mcs-Ap-qDH"/>
+                                    <constraint firstItem="4Rt-wZ-94t" firstAttribute="centerY" secondItem="coG-IC-V8z" secondAttribute="centerY" id="ceS-Uy-nYV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QnU-oH-dgo">
@@ -71,8 +94,10 @@
                     <connections>
                         <outlet property="countryFlagImageView" destination="HPB-gb-qI5" id="JIn-sA-A28"/>
                         <outlet property="informationTableView" destination="dHT-PK-xOQ" id="4vO-vC-7HB"/>
-                        <outlet property="navigationBarContainerView" destination="oqh-oY-uLX" id="idX-HW-OZE"/>
+                        <outlet property="navigationBarContainerView" destination="oqh-oY-uLX" id="JI2-FU-vU2"/>
                         <outlet property="navigationBarView" destination="coG-IC-V8z" id="l2k-g9-a2s"/>
+                        <outlet property="selectedCountryContainer" destination="4Rt-wZ-94t" id="TSn-2q-Hjz"/>
+                        <outlet property="selectedCountryNameLabel" destination="PaZ-J1-Bpk" id="Vs6-vp-VdW"/>
                         <outlet property="tableViewContainerView" destination="QnU-oH-dgo" id="Mmo-A3-kiB"/>
                     </connections>
                 </viewController>
@@ -143,8 +168,11 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="mainBackgroundColor">
+            <color red="0.94901960784313721" green="0.98039215686274506" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="mainChartBackgroundColor">
-            <color red="0.07787761671722962" green="0.11734508939522117" blue="0.28030719179095642" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.0" green="0.12156862745098039" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

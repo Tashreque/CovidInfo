@@ -70,8 +70,11 @@ class DashboardViewModel {
     var oneDeathPerPeople: Int?
     var oneTestPerPeople: Int?
 
-    // Country flag URL.
+    /// Country flag URL.
     var currentCountryFlagUrl: URL? = URL(string: ConstantUrls.globeIconUrl)
+
+    /// The selected country name.
+    var selectedCountryName = "Global"
 
     /// This function must be initially called in order to bind this view model with its corresponding view controller.
     func getNecessaryInitialData() {
@@ -127,6 +130,7 @@ class DashboardViewModel {
             currentCountryFlagUrl = URL(string: countryInfo.countryInfo?.flag ?? "")
             shouldBindNecessaryData?()
         }
+        selectedCountryName = country
     }
 
     func getHistoricalDataSet() -> [LineChartDataSet?] {

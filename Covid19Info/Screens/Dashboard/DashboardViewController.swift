@@ -16,6 +16,8 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var navigationBarContainerView: UIView!
     @IBOutlet weak var navigationBarView: UIView!
     @IBOutlet weak var countryFlagImageView: UIImageView!
+    @IBOutlet weak var selectedCountryNameLabel: UILabel!
+    @IBOutlet weak var selectedCountryContainer: UIView!
 
     // The view model for this view controller.
     var viewModel = DashboardViewModel()
@@ -46,11 +48,7 @@ class DashboardViewController: UIViewController {
         // Show loading indicator.
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            let loadingScreenVC = LoadingViewController()
-            loadingScreenVC.modalTransitionStyle = .crossDissolve
-            loadingScreenVC.modalPresentationStyle = .overFullScreen
-            self.loadingScreenViewController = loadingScreenVC
-            self.present(loadingScreenVC, animated: true, completion: nil)
+            self.loadingScreenViewController = self.showLoadingScreen()
 
             // Bind view model.
             self.bindViewModel()
@@ -58,28 +56,31 @@ class DashboardViewController: UIViewController {
     }
 
     private func setupUI() {
-        self.view.backgroundColor = Color.mainBackgroundColor
-        navigationBarContainerView.backgroundColor = Color.mainBackgroundColor
-        navigationBarView.backgroundColor = Color.mainBackgroundColor
+        self.view.backgroundColor = Color.mainChartBackgroundColor
+        navigationBarContainerView.backgroundColor = Color.mainChartBackgroundColor
+        navigationBarView.backgroundColor = Color.mainChartBackgroundColor
         tableViewContainerView.backgroundColor = Color.mainBackgroundColor
 
         informationTableView.delegate = self
         informationTableView.dataSource = self
         informationTableView.separatorStyle = .none
-        informationTableView.backgroundColor = Color.mainBackgroundColor
+        informationTableView.backgroundColor = Color.mainChartBackgroundColor
         informationTableView.register(UINib(nibName: InformationTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: InformationTableViewCell.identifier)
         informationTableView.register(UINib(nibName: GeneralInfoTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: GeneralInfoTableViewCell.identifier)
         informationTableView.register(UINib(nibName: CasesTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CasesTableViewCell.identifier)
         informationTableView.register(UINib(nibName: HistoricalDataTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: HistoricalDataTableViewCell.identifier)
 
         countryFlagImageView.isUserInteractionEnabled = true
-        countryFlagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCountryFlag)))
+        selectedCountryContainer.layer.cornerRadius = 15
+        selectedCountryContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCountryFlag)))
+        selectedCountryNameLabel.textColor = Color.purpleTextColor
     }
 
     private func populateUIWithData() {
         if let url = viewModel.currentCountryFlagUrl {
             self.countryFlagImageView.sd_setImage(with: url, completed: nil)
         }
+        self.selectedCountryNameLabel.text = viewModel.selectedCountryName
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -96,6 +97,7 @@ class DashboardViewController: UIViewController {
             viewController.countryIconUrls = viewModel.getAllCountryFlagUrls()
             viewController.didChooseCountry = { [weak self] (chosenCountry) in
                 guard let self = self else { return }
+                self.loadingScreenViewController = self.showLoadingScreen()
                 self.viewModel.generateInformationToDisplay(for: chosenCountry)
             }
 
@@ -112,7 +114,7 @@ extension DashboardViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CasesTableViewCell.identifier, for: indexPath) as! CasesTableViewCell
-            cell.configureCell(title: "Cases", value: viewModel.cases)
+            cell.configureCell(casesTitle: "Cases", casesValue: viewModel.cases, recoveredTitle: "Recoveries", recoveredValue: viewModel.recoveries, deathTitle: "Deaths", deathValue: viewModel.deaths)
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: HistoricalDataTableViewCell.identifier, for: indexPath) as! HistoricalDataTableViewCell

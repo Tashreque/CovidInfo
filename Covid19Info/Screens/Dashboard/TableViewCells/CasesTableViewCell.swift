@@ -15,6 +15,11 @@ class CasesTableViewCell: UITableViewCell {
     // MARK: - IBOutlet connections.
     @IBOutlet weak var casesTitleLabel: UILabel!
     @IBOutlet weak var casesValueLabel: UILabel!
+    @IBOutlet weak var recoveredTitleLabel: UILabel!
+    @IBOutlet weak var recoveredValueLabel: UILabel!
+    @IBOutlet weak var deathTitleLabel: UILabel!
+    @IBOutlet weak var deathValueLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,13 +35,25 @@ class CasesTableViewCell: UITableViewCell {
 
     private func setupUI() {
         casesTitleLabel.numberOfLines = 0
-        casesTitleLabel.textColor = Color.purpleTextColor
-        casesValueLabel.textColor = Color.purpleTextColor
+        casesTitleLabel.textColor = Color.mainBackgroundColor
+        casesValueLabel.textColor = .yellow
+        recoveredTitleLabel.textColor = Color.mainBackgroundColor
+        recoveredValueLabel.textColor = .green
+        deathTitleLabel.textColor = Color.mainBackgroundColor
+        deathValueLabel.textColor = .red
+
+        containerView.clipsToBounds = true
+        containerView.layer.cornerRadius = 40
+        containerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
 
-    func configureCell(title: String, value: Int?) {
-        casesTitleLabel.text = title
-        casesValueLabel.text = "\(value ?? 0)"
+    func configureCell(casesTitle: String, casesValue: Int?, recoveredTitle: String, recoveredValue: Int?, deathTitle: String, deathValue: Int?) {
+        casesTitleLabel.text = casesTitle
+        casesValueLabel.text = "\(casesValue ?? 0)"
+        recoveredTitleLabel.text = recoveredTitle
+        recoveredValueLabel.text = "\(recoveredValue ?? 0)"
+        deathTitleLabel.text = deathTitle
+        deathValueLabel.text = "\(deathValue ?? 0)"
     }
     
 }
